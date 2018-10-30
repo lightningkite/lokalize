@@ -19,5 +19,6 @@ Especially implements time components.
 - `Time`, which only contains a time in the day
 - `DateTime`, which combines both
 - `TimeStamp`, which is always in UTC
+    - `TimeStamp.now()`, which gets the current time
 - `Duration`, which represents a duration in milliseconds
 - `ShortDuration`, which represents a finer duration in nanoseconds
