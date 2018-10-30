@@ -1,0 +1,3 @@
+rootProject.name = 'lokalize'
+
+enableFeaturePreview('GRADLE_METADATA')
