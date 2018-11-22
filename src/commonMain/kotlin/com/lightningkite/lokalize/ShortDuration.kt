@@ -1,6 +1,6 @@
 package com.lightningkite.lokalize
 
-inline class ShortDuration(val nanoseconds: Long) : Comparable<ShortDuration> {
+/*inline*/ data class ShortDuration(val nanoseconds: Long) : Comparable<ShortDuration> {
 
     override fun compareTo(other: ShortDuration): Int = nanoseconds.compareTo(other.nanoseconds)
 

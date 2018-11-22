@@ -1,6 +1,6 @@
 package com.lightningkite.lokalize
 
-inline class Date(val daysSinceEpoch: Int) : Comparable<Date> {
+/*inline*/ data class Date(val daysSinceEpoch: Int) : Comparable<Date> {
 
     override fun compareTo(other: Date): Int = daysSinceEpoch.compareTo(other.daysSinceEpoch)
 

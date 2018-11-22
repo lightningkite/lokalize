@@ -1,7 +1,7 @@
 package com.lightningkite.lokalize
 
 
-inline class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp> {
+/*inline*/ data class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp> {
 
     override fun compareTo(other: TimeStamp): Int = millisecondsSinceEpoch.compareTo(other.millisecondsSinceEpoch)
 
