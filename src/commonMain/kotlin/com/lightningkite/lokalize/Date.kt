@@ -2,14 +2,32 @@ package com.lightningkite.lokalize
 
 /*inline*/ data class Date(val daysSinceEpoch: Int) : Comparable<Date> {
 
+    constructor(
+            year: Year,
+            month: Month,
+            day: Int
+    ) : this(
+            -TimeConstants.EPOCH_STARTED_ON_DAY_AD +
+                    1 + //Leap day in year zero
+                    year.sinceAD * TimeConstants.DAYS_PER_YEAR +
+                    year.sinceAD / 4 -
+                    year.sinceAD / 100 +
+                    year.sinceAD / 400 +
+                    (if (year.isLeap) -1 else 0) +
+                    (if (year.isLeap) month.startDayInLeapYear else month.startDayInNormalYear) +
+                    (day - 1) //Need to get day back to being zero-indexed
+    )
+
     override fun compareTo(other: Date): Int = daysSinceEpoch.compareTo(other.daysSinceEpoch)
 
     companion object {
         fun iso8601(string: String): Date = Date(
-            year = Year(string.substringBefore('-').toIntOrNull() ?: 1970),
-            month = Month.values()[string.substringAfter('-').substringBefore('-').toIntOrNull()?.minus(1) ?: 0],
-            day = string.substringAfterLast('-').toIntOrNull() ?: 0
+                year = Year(string.substringBefore('-').toIntOrNull() ?: 1970),
+                month = Month.values()[string.substringAfter('-').substringBefore('-').toIntOrNull()?.minus(1) ?: 0],
+                day = string.substringAfterLast('-').toIntOrNull() ?: 0
         )
+
+
     }
 
     private val yearAndDayInYear: YearAndDayInYear
@@ -27,7 +45,7 @@ package com.lightningkite.lokalize
 
             val year = Year(setsOf400Years * 400 + setsOf100Years * 100 + setsOf4Years * 4 + extraYears)
 
-            val daysIntoYear = if(year.isLeap && extraYears != 4 && setsOf4Years != 25 && setsOf100Years != 4) remainingDays + 1 else remainingDays
+            val daysIntoYear = if (year.isLeap && extraYears != 4 && setsOf4Years != 25 && setsOf100Years != 4) remainingDays + 1 else remainingDays
             return YearAndDayInYear.make(year, daysIntoYear)
         }
 
@@ -71,24 +89,3 @@ package com.lightningkite.lokalize
 
     operator fun minus(other: Date) = Duration((daysSinceEpoch - other.daysSinceEpoch).times(TimeConstants.MS_PER_DAY))
 }
-
-fun Date(
-    year: Year,
-    month: Month,
-    day: Int
-): Date {
-    //ONLY WORKS ON DATES AFTER YEAR ZERO
-    return Date(
-        -TimeConstants.EPOCH_STARTED_ON_DAY_AD +
-                1 + //Leap day in year zero
-                year.sinceAD * TimeConstants.DAYS_PER_YEAR +
-                year.sinceAD / 4 -
-                year.sinceAD / 100 +
-                year.sinceAD / 400 +
-                (if(year.isLeap) -1 else 0) +
-                (if(year.isLeap) month.startDayInLeapYear else month.startDayInNormalYear) +
-                (day - 1) //Need to get day back to being zero-indexed
-    )
-}
-
-
