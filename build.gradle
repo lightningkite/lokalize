@@ -36,7 +36,7 @@ kotlin {
         commonMain {
             dependencies {
                 api 'org.jetbrains.kotlin:kotlin-stdlib-common'
-                api "com.lightningkite:kommon-metadata:${project.version}"
+                api 'com.lightningkite:kommon-metadata:0.0.2'
             }
         }
         commonTest {
@@ -48,7 +48,7 @@ kotlin {
         jvmMain {
             dependencies {
                 api 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-                api "com.lightningkite:kommon-jvm:${project.version}"
+                api 'com.lightningkite:kommon-jvm:0.0.2'
             }
         }
         jvmTest {
@@ -60,7 +60,7 @@ kotlin {
         jsMain {
             dependencies {
                 api 'org.jetbrains.kotlin:kotlin-stdlib-js'
-                api "com.lightningkite:kommon-js:${project.version}"
+                api 'com.lightningkite:kommon-js:0.0.2'
             }
         }
         jsTest {
@@ -71,7 +71,7 @@ kotlin {
 
         iosMain {
             dependencies {
-                api "com.lightningkite:kommon-ios:${project.version}"
+                api 'com.lightningkite:kommon-ios:0.0.2'
             }
         }
         iosTest {
