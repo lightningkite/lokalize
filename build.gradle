@@ -69,22 +69,24 @@ kotlin {
             }
         }
 
-        iosMain {
-            dependencies {
-                api 'com.lightningkite:kommon-ios:0.0.2'
+        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+            iosMain {
+                dependencies {
+                    api 'com.lightningkite:kommon-ios:0.0.2'
+                }
             }
-        }
-        iosTest {
-            dependencies {
+            iosTest {
+                dependencies {
+                }
             }
-        }
-        iosx64Main {
-            dependencies {
-                api "com.lightningkite:kommon-iosx64:${project.version}"
+            iosx64Main {
+                dependencies {
+                    api "com.lightningkite:kommon-iosx64:${project.version}"
+                }
             }
-        }
-        iosx64Test {
-            dependencies {
+            iosx64Test {
+                dependencies {
+                }
             }
         }
     }
