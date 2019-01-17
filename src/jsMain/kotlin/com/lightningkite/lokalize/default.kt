@@ -1,5 +1,6 @@
 package com.lightningkite.lokalize
 
+import com.lightningkite.lokalize.time.*
 import kotlin.browser.window
 
 actual val DefaultLocale = object : Locale {
@@ -31,9 +32,3 @@ actual val DefaultLocale = object : Locale {
         return kotlin.js.Date(milliseconds = timeStamp.millisecondsSinceEpoch).toLocaleString()
     }
 }
-
-actual fun TimeStamp.Companion.now(): TimeStamp {
-    return TimeStamp(kotlin.js.Date.now().toLong())
-}
-
-actual fun ShortDuration.Companion.get(): ShortDuration = ShortDuration(TimeStamp.now().millisecondsSinceEpoch.times(TimeConstants.NS_PER_MILLISECOND))

@@ -59,9 +59,3 @@ actual val DefaultLocale = object : Locale {
         ).let{ dateFormatter.stringFromDate(it) }
     }
 }
-
-actual fun TimeStamp.Companion.now(): TimeStamp {
-    return TimeStamp(NSDate.date().timeIntervalSince1970.times(1000).toLong())
-}
-
-actual fun ShortDuration.Companion.get(): ShortDuration = ShortDuration(CACurrentMediaTime().times(TimeConstants.NS_PER_SECOND).toLong())

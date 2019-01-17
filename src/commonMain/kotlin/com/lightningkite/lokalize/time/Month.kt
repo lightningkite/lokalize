@@ -1,4 +1,4 @@
-package com.lightningkite.lokalize
+package com.lightningkite.lokalize.time
 
 enum class Month(val days: Int, val daysLeap: Int = days) {
     January(31),

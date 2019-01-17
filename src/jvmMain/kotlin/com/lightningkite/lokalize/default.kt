@@ -1,8 +1,8 @@
 package com.lightningkite.lokalize
 
+import com.lightningkite.lokalize.time.*
 import java.text.DateFormat
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
 
 private val javaLocale = java.util.Locale.getDefault()
 private val javaTimeZone = java.util.TimeZone.getDefault()
@@ -35,9 +35,3 @@ actual val DefaultLocale = object : Locale{
         return DateFormat.getDateTimeInstance().format(java.util.Date(timeStamp.millisecondsSinceEpoch))
     }
 }
-
-actual fun TimeStamp.Companion.now(): TimeStamp {
-    return TimeStamp(java.lang.System.currentTimeMillis())
-}
-
-actual fun ShortDuration.Companion.get(): ShortDuration = ShortDuration(System.nanoTime())

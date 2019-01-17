@@ -1,4 +1,4 @@
-package com.lightningkite.lokalize
+package com.lightningkite.lokalize.time
 
 internal inline class YearAndDayInYear(val combined: Long) {
     val year: Year get() = Year((combined shr 16).toInt())

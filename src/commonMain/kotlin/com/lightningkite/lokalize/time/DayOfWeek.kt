@@ -1,4 +1,4 @@
-package com.lightningkite.lokalize
+package com.lightningkite.lokalize.time
 
 enum class DayOfWeek {
     Sunday,

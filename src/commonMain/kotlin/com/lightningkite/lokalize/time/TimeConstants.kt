@@ -1,4 +1,4 @@
-package com.lightningkite.lokalize
+package com.lightningkite.lokalize.time
 
 object TimeConstants {
     const val EPOCH_STARTED_ON_DAY_AD: Int = 719528

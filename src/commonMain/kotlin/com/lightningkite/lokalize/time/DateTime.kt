@@ -1,4 +1,6 @@
-package com.lightningkite.lokalize
+package com.lightningkite.lokalize.time
+
+import com.lightningkite.lokalize.DefaultLocale
 
 data class DateTime(val date: Date, val time: Time) : Comparable<DateTime> {
 

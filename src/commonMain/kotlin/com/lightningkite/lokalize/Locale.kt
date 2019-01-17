@@ -1,5 +1,6 @@
 package com.lightningkite.lokalize
 
+import com.lightningkite.lokalize.time.*
 
 
 interface Locale{
