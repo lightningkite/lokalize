@@ -1,6 +1,6 @@
 package com.lightningkite.lokalize.time
 
-inline class Date(val daysSinceEpoch: Int) : Comparable<Date> {
+/*inline*/ data class Date(val daysSinceEpoch: Int) : Comparable<Date> {
 
     constructor(
             year: Year,
