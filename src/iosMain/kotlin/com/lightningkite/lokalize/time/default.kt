@@ -1,4 +1,4 @@
-package com.lightningkite.lokalize
+package com.lightningkite.lokalize.time
 
 import platform.Foundation.*
 import platform.QuartzCore.CACurrentMediaTime

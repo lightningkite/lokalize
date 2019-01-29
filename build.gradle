@@ -80,11 +80,13 @@ kotlin {
                 }
             }
             iosx64Main {
+                kotlin.srcDir('src/iosMain/kotlin')
                 dependencies {
                     api "com.lightningkite:kommon-iosx64:${project.version}"
                 }
             }
             iosx64Test {
+                kotlin.srcDir('src/iosTest/kotlin')
                 dependencies {
                 }
             }
