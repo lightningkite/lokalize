@@ -1,7 +1,7 @@
 package com.lightningkite.lokalize.time
 
 
-inline class Time(val millisecondsSinceMidnight: Int) : Comparable<Time> {
+/*inline*/ data class Time(val millisecondsSinceMidnight: Int) : Comparable<Time> {
 
     override fun compareTo(other: Time): Int = millisecondsSinceMidnight.compareTo(other.millisecondsSinceMidnight)
 

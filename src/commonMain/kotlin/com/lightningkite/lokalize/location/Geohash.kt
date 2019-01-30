@@ -6,7 +6,7 @@ import com.lightningkite.kommon.bytes.bitHighOn
 import com.lightningkite.kommon.bytes.bitHighSet
 
 
-inline class Geohash(val bits: Long) : Comparable<Geohash> {
+/*inline*/ data class Geohash(val bits: Long) : Comparable<Geohash> {
     override fun compareTo(other: Geohash): Int {
         return bits.compareTo(other.bits)
     }
