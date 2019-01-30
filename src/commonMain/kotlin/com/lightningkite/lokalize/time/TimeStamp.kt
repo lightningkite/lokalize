@@ -3,7 +3,7 @@ package com.lightningkite.lokalize.time
 import com.lightningkite.lokalize.DefaultLocale
 
 
-/*inline*/ data class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp> {
+inline class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp> {
 
     override fun compareTo(other: TimeStamp): Int = millisecondsSinceEpoch.compareTo(other.millisecondsSinceEpoch)
 
