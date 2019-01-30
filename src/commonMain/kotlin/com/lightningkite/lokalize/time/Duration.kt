@@ -1,6 +1,6 @@
 package com.lightningkite.lokalize.time
 
-/*inline*/ data class Duration(val milliseconds: Long) : Comparable<Duration> {
+inline class Duration(val milliseconds: Long) : Comparable<Duration> {
 
     override fun compareTo(other: Duration): Int = milliseconds.compareTo(other.milliseconds)
 
