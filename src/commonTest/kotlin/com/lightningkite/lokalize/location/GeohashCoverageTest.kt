@@ -10,8 +10,8 @@ class GeohashCoverageTest {
     @Test
     fun testCoverRatio() {
         val points = ArrayList<Geohash>()
-        for (lat in -90..90) {
-            for (lon in -90..90) {
+        for (lat in -90..90 step 5) {
+            for (lon in -90..90 step 5) {
                 points.addSorted(Geohash.fromLatLng(lat.toDouble(), lon.toDouble()))
             }
         }
@@ -19,9 +19,9 @@ class GeohashCoverageTest {
             for (lowerLon in -90..80 step 5) {
                 val coverage = GeohashCoverage.coverRatio(
                         lowerLatitude = lowerLat.toDouble(),
-                        upperLatitude = lowerLat + 10.0,
+                        upperLatitude = lowerLat + 12.0,
                         lowerLongitude = lowerLon.toDouble(),
-                        upperLongitude = lowerLon + 10.0,
+                        upperLongitude = lowerLon + 12.0,
                         ratioBelow = 4.0
                 ).simplify()
 
@@ -47,8 +47,8 @@ class GeohashCoverageTest {
     @Test
     fun testCoverHashes() {
         val points = ArrayList<Geohash>()
-        for (lat in -90..90) {
-            for (lon in -90..90) {
+        for (lat in -90..90 step 5) {
+            for (lon in -90..90 step 5) {
                 points.addSorted(Geohash.fromLatLng(lat.toDouble(), lon.toDouble()))
             }
         }
@@ -56,9 +56,9 @@ class GeohashCoverageTest {
             for (lowerLon in -90..80 step 5) {
                 val coverage = GeohashCoverage.coverMaxHashes(
                         lowerLatitude = lowerLat.toDouble(),
-                        upperLatitude = lowerLat + 10.0,
+                        upperLatitude = lowerLat + 12.0,
                         lowerLongitude = lowerLon.toDouble(),
-                        upperLongitude = lowerLon + 10.0,
+                        upperLongitude = lowerLon + 12.0,
                         hashCap = 12
                 ).simplify()
 
@@ -103,22 +103,20 @@ class GeohashCoverageTest {
             println("coverage: $c")
         }
 
-        println("Hashes less than 12: " + GeohashCoverage.coverMaxHashes(
+        assertTrue(GeohashCoverage.coverMaxHashes(
                 lowerLatitude = 0.0,
                 upperLatitude = 10.0,
                 lowerLongitude = 0.0,
                 upperLongitude = 10.0,
                 hashCap = 12
-        ).ranges.size)
+        ).ranges.size <= 12)
 
-        println("Ratio less than 2.0: " + GeohashCoverage.coverRatio(
+        assertTrue(GeohashCoverage.coverRatio(
                 lowerLatitude = 0.0,
                 upperLatitude = 10.0,
                 lowerLongitude = 0.0,
                 upperLongitude = 10.0,
                 ratioBelow = 2.0
-        ).ratio)
-
-        fail()
+        ).ratio <= 2.0)
     }
 }

@@ -53,7 +53,7 @@ class Iso8601Test {
 
     @Test
     fun checkAllDates() {
-        for (day in 0..TimeConstants.EPOCH_STARTED_ON_DAY_AD) {
+        for (day in 0..TimeConstants.EPOCH_STARTED_ON_DAY_AD step 20) {
             val original = Date(day)
             val reparsed = Date.iso8601(Date(day).iso8601())
             assertEquals(
@@ -63,8 +63,7 @@ class Iso8601Test {
             )
         }
     }
-    
-    
+
 
     @Test
     fun enterLeapYearParse() {
@@ -116,8 +115,7 @@ class Iso8601Test {
             days.distinct().size == days.size
         }
     }
-    
-    
+
 
     @Test
     fun enterLeapYearRender() {

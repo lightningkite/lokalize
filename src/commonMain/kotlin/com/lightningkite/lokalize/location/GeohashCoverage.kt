@@ -11,7 +11,7 @@ class GeohashCoverage(
         val sorted = ranges.sortedBy { it.start }
         val out = ArrayList<LongRange>()
         var currentStart = 0L
-        var currentEndInclusive = sorted.first().endInclusive
+        var currentEndInclusive = 0L
         for(item in sorted){
             if(currentStart == 0L) {
                 currentStart = item.start

@@ -7,6 +7,7 @@ import com.lightningkite.lokalize.time.TimeStamp
 import platform.Foundation.*
 import platform.QuartzCore.CACurrentMediaTime
 import platform.posix.gettimeofday
+import kotlin.native.concurrent.SharedImmutable
 
 @SharedImmutable
 actual val DefaultLocale = object : Locale {

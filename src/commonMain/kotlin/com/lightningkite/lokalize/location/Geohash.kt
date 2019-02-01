@@ -71,7 +71,6 @@ inline class Geohash(val bits: Long) : Comparable<Geohash> {
                 if (position < 0) break
             }
             if (stringIndex < string.length) {
-                println("Read from last char ${string[stringIndex]}: ${fromChar(string[stringIndex]).toLong().shr(1)}")
                 bits = bits or fromChar(string[stringIndex]).toLong().shr(1)
             }
             return Geohash(bits)
