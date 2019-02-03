@@ -81,18 +81,18 @@ publishing {
     // Remove gradle metadata publishing from all targets which are not native
     kotlin.targets.all { target ->
         if (target.platformType.name != 'native') {
-            def publication = publishing.publications[targetName] as MavenPublication
             try {
+                def publication = publishing.publications[targetName] as MavenPublication
                 if (target.platformType.name != 'native') {
                     publication.moduleDescriptorGenerator = null
                 } else {
                     publication.artifact emptyJar
                 }
+                tasks.matching { it.name == "generateMetadataFileFor${name.capitalize()}Publication" }.all {
+                    onlyIf { false }
+                }
             } catch (Exception e) {
                 println("For target $target: ${e.message}")
-            }
-            tasks.matching { it.name == "generateMetadataFileFor${name.capitalize()}Publication" }.all {
-                onlyIf { false }
             }
         }
     }
