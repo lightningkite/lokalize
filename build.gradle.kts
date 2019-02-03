@@ -1,22 +1,12 @@
 import org.gradle.api.publish.maven.MavenPom
+import org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
+import org.gradle.internal.os.OperatingSystem
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinTargetContainerWithPresetFunctions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import java.net.URI
 import java.util.Properties
 import kotlin.collections.ArrayList
-import org.gradle.internal.os.OperatingSystem
-
-plugins {
-    kotlin("multiplatform") version "1.3.20"
-    `maven-publish`
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven("https://dl.bintray.com/lightningkite/com.lightningkite.krosslin")
-}
 
 
 /*
@@ -56,36 +46,33 @@ class Platform(
             add("commonTestImplementation", "org.jetbrains.kotlin:kotlin-test-common")
         })
         /**/val native = common.child("native")
-        /*    */val posix = native.child("posix", worksOnMyPlatform = { OperatingSystem.current().isMacOsX || OperatingSystem.current().isLinux || OperatingSystem.current().isUnix })
-        /*        */val apple = posix.child("apple", worksOnMyPlatform = { OperatingSystem.current().isMacOsX })
-        /*            */val ios = apple.child("ios")
-        /*                */val iosX64 = ios.child("iosX64") { iosX64() }
-        /*                */val iosArm32 = ios.child("iosArm32") { iosArm32() }
-        /*                */val iosArm64 = ios.child("iosArm64") { iosArm64() }
-        /*            */val macosX64 = apple.child("macosX64") { macosX64() }
-        /*        */val linux = posix.child("linux", worksOnMyPlatform = { OperatingSystem.current().isLinux })
-        /*            */val linuxX64 = linux.child("linuxX64") { linuxX64() }
-        /*            */val linuxArm32Hfp = linux.child("linuxArm32Hfp") { linuxArm32Hfp() }
-        /*            */val linuxMips32 = linux.child("linuxMips32") { linuxMips32() }
-        /*            */val linuxMipsel32 = linux.child("linuxMipsel32") { linuxMipsel32() }
-        /*        */val androidNative = posix.child("androidNative", worksOnMyPlatform = { OperatingSystem.current().isLinux || OperatingSystem.current().isMacOsX })
-        /*            */val androidNativeArm32 = androidNative.child("androidNativeArm32") { androidNativeArm32() }
-        /*            */val androidNativeArm64 = androidNative.child("androidNativeArm64") { androidNativeArm64() }
-        /*    */val mingwX64 = native.child("mingwX64", worksOnMyPlatform = { OperatingSystem.current().isWindows }) { mingwX64() }
-        /*    */val wasm32 = native.child("wasm32", worksOnMyPlatform = { OperatingSystem.current().isWindows }) { wasm32() }
+        val posix = native.child("posix", worksOnMyPlatform = { OperatingSystem.current().isMacOsX || OperatingSystem.current().isLinux || OperatingSystem.current().isUnix })
+        val apple = posix.child("apple", worksOnMyPlatform = { OperatingSystem.current().isMacOsX })
+        val ios = apple.child("ios")
+        val iosX64 = ios.child("iosX64") { iosX64() }
+        val iosArm32 = ios.child("iosArm32") { iosArm32() }
+        val iosArm64 = ios.child("iosArm64") { iosArm64() }
+        val macosX64 = apple.child("macosX64") { macosX64() }
+        val linux = posix.child("linux", worksOnMyPlatform = { OperatingSystem.current().isLinux })
+        val linuxX64 = linux.child("linuxX64") { linuxX64() }
+        val linuxArm32Hfp = linux.child("linuxArm32Hfp") { linuxArm32Hfp() }
+        val linuxMips32 = linux.child("linuxMips32") { linuxMips32() }
+        val linuxMipsel32 = linux.child("linuxMipsel32") { linuxMipsel32() }
+        val androidNative = posix.child("androidNative", worksOnMyPlatform = { OperatingSystem.current().isLinux || OperatingSystem.current().isMacOsX })
+        val androidNativeArm32 = androidNative.child("androidNativeArm32") { androidNativeArm32() }
+        val androidNativeArm64 = androidNative.child("androidNativeArm64") { androidNativeArm64() }
+        val mingwX64 = native.child("mingwX64", worksOnMyPlatform = { OperatingSystem.current().isWindows }) { mingwX64() }
         /**/val nonNative = common.child("nonNative")
-        /*    */val jvm = nonNative.child("jvm", impliedDependencySetup = {
-            /*    */    add("jvmMainImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-            /*    */    add("jvmTestImplementation", "org.jetbrains.kotlin:kotlin-test")
-            /*    */    add("jvmTestImplementation", "org.jetbrains.kotlin:kotlin-test-junit")
-            /*    */
+        val jvm = nonNative.child("jvm", impliedDependencySetup = {
+            add("jvmMainImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+            add("jvmTestImplementation", "org.jetbrains.kotlin:kotlin-test")
+            add("jvmTestImplementation", "org.jetbrains.kotlin:kotlin-test-junit")
         }) { jvm() }
-        /*        */val jvmDesktop = jvm.child("jvmDesktop") { jvm("jvmDesktop") }
-        /*        */val android = jvm.child("android") { android() }
-        /*    */val js = nonNative.child("js", impliedDependencySetup = {
-            /*    */    add("jsMainImplementation", "org.jetbrains.kotlin:kotlin-stdlib-js")
-            /*    */    add("jsTestImplementation", "org.jetbrains.kotlin:kotlin-test-js")
-            /*    */
+        val jvmDesktop = jvm.child("jvmDesktop") { jvm("jvmDesktop") }
+        val android = jvm.child("android") { android() }
+        val js = nonNative.child("js", impliedDependencySetup = {
+            add("jsMainImplementation", "org.jetbrains.kotlin:kotlin-stdlib-js")
+            add("jsTestImplementation", "org.jetbrains.kotlin:kotlin-test-js")
         }) {
             js {
                 compilations.all {
@@ -209,10 +196,30 @@ fun RepositoryHandler.bintray(
     }
 }
 
+afterEvaluate {
+    publishing.publications.asSequence()
+//            .filter { it.name == "metadata" }
+            .mapNotNull { it as? DefaultMavenPublication }
+            .forEach {
+                it.setModuleDescriptorGenerator(null)
+            }
+}
+
 
 /*
  * PROJECT STUFF
 */
+
+plugins {
+    kotlin("multiplatform") version "1.3.20"
+    `maven-publish`
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven("https://dl.bintray.com/lightningkite/com.lightningkite.krosslin")
+}
 
 
 val versions = Properties().apply {
