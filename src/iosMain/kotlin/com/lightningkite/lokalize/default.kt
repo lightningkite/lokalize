@@ -17,7 +17,7 @@ actual val DefaultLocale = object : Locale {
     override val languageVariant: String
         get() = NSBundle.mainBundle.preferredLocalizations.firstOrNull().let { it as? String ?: "US" }.substringAfter('-')
 
-    override fun getTimeOffsetMilliseconds(): Long = NSTimeZone.localTimeZone.secondsFromGMT.times(1000)
+    override fun getTimeOffsetMilliseconds(): Long = NSTimeZone.localTimeZone.secondsFromGMT.toLong().times(1000)
 
     override fun renderNumber(value: Number, decimalPositions: Int, maxOtherPositions: Int): String {
         val string = value.toString()

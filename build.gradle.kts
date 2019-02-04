@@ -14,13 +14,13 @@ import kotlin.collections.ArrayList
 */
 
 class Platform(
-        val name: String,
-        val publishName: String = name.toLowerCase(),
-        val parent: Platform? = null,
-        val children: ArrayList<Platform> = ArrayList(),
-        val impliedDependencySetup: DependencyHandler.() -> Unit = {},
-        val worksOnMyPlatform: () -> Boolean = { true },
-        val configure: (KotlinTargetContainerWithPresetFunctions.() -> Unit)? = null
+        var name: String,
+        var publishName: String = name.toLowerCase(),
+        var parent: Platform? = null,
+        var children: ArrayList<Platform> = ArrayList(),
+        var impliedDependencySetup: DependencyHandler.() -> Unit = {},
+        var worksOnMyPlatform: () -> Boolean = { true },
+        var configure: (KotlinTargetContainerWithPresetFunctions.() -> Unit)? = null
 ) {
     fun child(
             name: String,
@@ -37,6 +37,16 @@ class Platform(
         )
         children.add(newPlat)
         return newPlat
+    }
+
+    fun orphan() {
+        parent?.children?.remove(this)
+        parent = null
+    }
+
+    fun adopt(platform: Platform) {
+        children.add(platform)
+        platform.parent = this
     }
 
     companion object {
@@ -121,7 +131,7 @@ fun DependencyHandler.testApi(group: String, artifactStart: String, version: Str
 fun KotlinMultiplatformExtension.releaseFor(vararg platforms: Platform) = platforms.forEach { releaseFor(it) }
 fun KotlinMultiplatformExtension.releaseFor(platform: Platform) {
     if (platform.configure != null) {
-        platform.configure.invoke(this)
+        platform.configure!!.invoke(this)
         setupSourceSets(platform)
     } else platform.children.forEach {
         releaseFor(it)
@@ -216,7 +226,7 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
+    //    mavenLocal()
     mavenCentral()
     maven("https://dl.bintray.com/lightningkite/com.lightningkite.krosslin")
 }
@@ -230,6 +240,8 @@ group = "com.lightningkite"
 version = versions.getProperty(project.name)
 
 kotlin {
+    Platform.ios.orphan()
+    Platform.native.adopt(Platform.ios)
     releaseFor(Platform.common)
 }
 
