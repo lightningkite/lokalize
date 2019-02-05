@@ -1,6 +1,6 @@
 # Lokalize (LK)
 
- Plugin: [ ![Download](https://api.bintray.com/packages/lightningkite/com.lightningkite.krosslin/lokalize/images/download.svg) ](https://bintray.com/lightningkite/com.lightningkite.krosslin/lokalize/_latestVersion) 
+ Maven: [ ![Download](https://api.bintray.com/packages/lightningkite/com.lightningkite.krosslin/lokalize/images/download.svg) ](https://bintray.com/lightningkite/com.lightningkite.krosslin/lokalize/_latestVersion) 
 
 Tools for showing data localized across platforms.
 
