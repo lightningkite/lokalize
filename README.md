@@ -21,7 +21,8 @@ dependencies {
     api "com.lightningkite:lokalize-iosarm64:${lokalizeVersion}"
     api "com.lightningkite:lokalize-iosx64:${lokalizeVersion}"
     and more!
-}```
+}
+```
 
 ## Features
 
