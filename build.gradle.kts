@@ -4,8 +4,18 @@ import java.util.Properties
 plugins {
     kotlin("multiplatform") version "1.3.21"
     `maven-publish`
-    id("com.lightningkite.konvenience") version "0.0.2"
 }
+
+buildscript {
+    repositories {
+        mavenLocal()
+        maven("https://dl.bintray.com/lightningkite/com.lightningkite.krosslin")
+    }
+    dependencies {
+        classpath("com.lightningkite:konvenience:+")
+    }
+}
+apply(plugin = "com.lightningkite.konvenience")
 
 repositories {
     mavenLocal()
@@ -21,17 +31,15 @@ group = "com.lightningkite"
 version = versions.getProperty(project.name)
 
 kotlin {
-    all()
-    println(targets.joinToString { it.name })
 
-    sources {
+    sources(tryTargets = KTarget.allExceptAndroid - KTarget.wasm32) {
         main {
-            mpp(standardLibrary)
-            mpp(projectOrMavenDashPlatform("com.lightningkite", "kommon", versions.getProperty("kommon")))
+            dependency(standardLibrary)
+            dependency(projectOrMavenDashPlatform("com.lightningkite", "kommon", versions.getProperty("kommon")))
         }
         test {
-            mpp(testing)
-            mpp(testingAnnotations)
+            dependency(testing)
+            dependency(testingAnnotations)
         }
         isIos.sources {}
         isJs.sources {}
@@ -74,7 +82,7 @@ import java.util.Properties
 plugins {
     kotlin("multiplatform") version "1.3.21"
     `maven-publish`
-    id("com.lightningkite.konvenience") version "0.0.2"
+    id("com.lightningkite.konvenience") version "+"
 }
 
 repositories {

@@ -5,6 +5,7 @@ pluginManagement {
         google()
         jcenter()
         mavenLocal()
+        maven("https://dl.bintray.com/lightningkite/com.lightningkite.krosslin")
     }
 }
 
