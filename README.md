@@ -1,8 +1,28 @@
 # Lokalize (LK)
 
+ Maven: [ ![Download](https://api.bintray.com/packages/lightningkite/com.lightningkite.krosslin/lokalize/images/download.svg) ](https://bintray.com/lightningkite/com.lightningkite.krosslin/lokalize/_latestVersion) 
+
 Tools for showing data localized across platforms.
 
 Especially implements time components.
+
+```
+repositories {
+    maven { url 'https://dl.bintray.com/lightningkite/com.lightningkite.krosslin' }
+    ...
+}
+...
+dependencies {
+    ...
+    //Depending on the version you need
+    api "com.lightningkite:lokalize-metadata:${lokalizeVersion}"
+    api "com.lightningkite:lokalize-jvm:${lokalizeVersion}"
+    api "com.lightningkite:lokalize-js:${lokalizeVersion}"
+    api "com.lightningkite:lokalize-iosarm64:${lokalizeVersion}"
+    api "com.lightningkite:lokalize-iosx64:${lokalizeVersion}"
+    and more!
+}
+```
 
 ## Features
 
