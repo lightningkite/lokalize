@@ -50,6 +50,7 @@ kotlin {
 }
 
 publishing {
+    doNotPublishMetadata()
     repositories {
         bintray(
                 project = project,
