@@ -8,19 +8,19 @@ inline class Duration(val milliseconds: Long) : Comparable<Duration> {
         fun milliseconds(milliseconds: Long) = Duration(milliseconds)
 
         fun seconds(seconds: Long) = Duration(seconds * TimeConstants.MS_PER_SECOND)
-        fun minutes(seconds: Long) = Duration(seconds * TimeConstants.MS_PER_MINUTE)
-        fun hours(seconds: Long) = Duration(seconds * TimeConstants.MS_PER_HOUR)
-        fun days(seconds: Long) = Duration(seconds * TimeConstants.MS_PER_DAY)
+        fun minutes(minutes: Long) = Duration(minutes * TimeConstants.MS_PER_MINUTE)
+        fun hours(hours: Long) = Duration(hours * TimeConstants.MS_PER_HOUR)
+        fun days(days: Long) = Duration(days * TimeConstants.MS_PER_DAY)
 
         fun seconds(seconds: Float) = Duration((seconds * TimeConstants.MS_PER_SECOND).toLong())
-        fun minutes(seconds: Float) = Duration((seconds * TimeConstants.MS_PER_MINUTE).toLong())
-        fun hours(seconds: Float) = Duration((seconds * TimeConstants.MS_PER_HOUR).toLong())
-        fun days(seconds: Float) = Duration((seconds * TimeConstants.MS_PER_DAY).toLong())
+        fun minutes(minutes: Float) = Duration((minutes * TimeConstants.MS_PER_MINUTE).toLong())
+        fun hours(hours: Float) = Duration((hours * TimeConstants.MS_PER_HOUR).toLong())
+        fun days(days: Float) = Duration((days * TimeConstants.MS_PER_DAY).toLong())
 
         fun seconds(seconds: Double) = Duration((seconds * TimeConstants.MS_PER_SECOND).toLong())
-        fun minutes(seconds: Double) = Duration((seconds * TimeConstants.MS_PER_MINUTE).toLong())
-        fun hours(seconds: Double) = Duration((seconds * TimeConstants.MS_PER_HOUR).toLong())
-        fun days(seconds: Double) = Duration((seconds * TimeConstants.MS_PER_DAY).toLong())
+        fun minutes(minutes: Double) = Duration((minutes * TimeConstants.MS_PER_MINUTE).toLong())
+        fun hours(hours: Double) = Duration((hours * TimeConstants.MS_PER_HOUR).toLong())
+        fun days(days: Double) = Duration((days * TimeConstants.MS_PER_DAY).toLong())
 
         val zero = Duration(0)
     }
