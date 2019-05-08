@@ -15,6 +15,9 @@ inline class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp>
                 offset = Duration.zero
             )
         }
+
+        val MIN = TimeStamp(Long.MIN_VALUE)
+        val MAX = TimeStamp(Long.MAX_VALUE)
     }
 
     fun iso8601(): String = date(Duration.zero).iso8601() + "T" + time(Duration.zero).iso8601() + "Z"
@@ -22,23 +25,24 @@ inline class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp>
     operator fun plus(duration: Duration) = TimeStamp(millisecondsSinceEpoch + duration.milliseconds)
     operator fun minus(duration: Duration) = TimeStamp(millisecondsSinceEpoch - duration.milliseconds)
     operator fun minus(other: TimeStamp) = Duration(millisecondsSinceEpoch - other.millisecondsSinceEpoch)
+
+    fun date(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())): Date =
+            Date(((millisecondsSinceEpoch - offset.milliseconds) / TimeConstants.MS_PER_DAY).toInt())
+
+    fun time(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())): Time =
+            Time(((millisecondsSinceEpoch - offset.milliseconds) % TimeConstants.MS_PER_DAY).toInt())
+
+    fun dateTime(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())): DateTime = DateTime(date(offset), time(offset))
+
+
+    constructor(
+            date: Date,
+            time: Time,
+            offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())
+    ) : this(
+            date.daysSinceEpoch * 24L * 60 * 60 * 1000 +
+                    time.millisecondsSinceMidnight +
+                    offset.milliseconds
+    )
+
 }
-
-fun TimeStamp.date(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())): Date =
-    Date(((millisecondsSinceEpoch - offset.milliseconds) / TimeConstants.MS_PER_DAY).toInt())
-
-fun TimeStamp.time(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())): Time =
-    Time(((millisecondsSinceEpoch - offset.milliseconds) % TimeConstants.MS_PER_DAY).toInt())
-
-fun TimeStamp.dateTime(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())): DateTime = DateTime(date(offset), time(offset))
-
-
-fun TimeStamp(
-    date: Date,
-    time: Time,
-    offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())
-) = TimeStamp(
-    date.daysSinceEpoch * 24L * 60 * 60 * 1000 +
-            time.millisecondsSinceMidnight +
-            offset.milliseconds
-)

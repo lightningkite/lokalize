@@ -27,6 +27,8 @@ inline class Date(val daysSinceEpoch: Int) : Comparable<Date> {
                 day = string.substringAfterLast('-').toIntOrNull() ?: 0
         )
 
+        val MIN = Date(Int.MIN_VALUE)
+        val MAX = Date(Int.MAX_VALUE)
 
     }
 
