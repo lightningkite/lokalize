@@ -108,5 +108,41 @@ class GeohashCoverage(
             val bits = (2..32).first { coverageRatio(lowerLatitude, upperLatitude, lowerLongitude, upperLongitude, it) < ratioBelow }
             return cover(lowerLatitude, upperLatitude, lowerLongitude, upperLongitude, bits)
         }
+
+        fun coverRadius(
+                center: Geohash,
+                radiusKm: Double,
+                bits: Int
+        ): GeohashCoverage = cover(
+                lowerLatitude = center.latitude - radiusKm * World.latitudeDegreeKm,
+                upperLatitude = center.latitude + radiusKm * World.latitudeDegreeKm,
+                lowerLongitude = center.longitude - radiusKm * World.longitudeDegreeKm(center.latitude),
+                upperLongitude = center.longitude + radiusKm * World.longitudeDegreeKm(center.latitude),
+                bits = bits
+        )
+
+        fun coverRadiusRatio(
+                center: Geohash,
+                radiusKm: Double,
+                ratioBelow: Double = 4.0
+        ): GeohashCoverage = coverRatio(
+                lowerLatitude = center.latitude - radiusKm * World.latitudeDegreeKm,
+                upperLatitude = center.latitude + radiusKm * World.latitudeDegreeKm,
+                lowerLongitude = center.longitude - radiusKm * World.longitudeDegreeKm(center.latitude),
+                upperLongitude = center.longitude + radiusKm * World.longitudeDegreeKm(center.latitude),
+                ratioBelow = ratioBelow
+        )
+
+        fun coverRadiusMaxHashes(
+                center: Geohash,
+                radiusKm: Double,
+                hashCap: Int = 12
+        ): GeohashCoverage = coverMaxHashes(
+                lowerLatitude = center.latitude - radiusKm * World.latitudeDegreeKm,
+                upperLatitude = center.latitude + radiusKm * World.latitudeDegreeKm,
+                lowerLongitude = center.longitude - radiusKm * World.longitudeDegreeKm(center.latitude),
+                upperLongitude = center.longitude + radiusKm * World.longitudeDegreeKm(center.latitude),
+                hashCap = hashCap
+        )
     }
 }

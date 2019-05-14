@@ -4,8 +4,8 @@ import com.lightningkite.lokalize.time.*
 import java.text.DateFormat
 import java.text.DecimalFormat
 
-private val javaLocale = java.util.Locale.getDefault()
-private val javaTimeZone = java.util.TimeZone.getDefault()
+private val javaLocale get() = java.util.Locale.getDefault()
+private val javaTimeZone get() = java.util.TimeZone.getDefault()
 
 actual val DefaultLocale = object : Locale{
     override val language: String
