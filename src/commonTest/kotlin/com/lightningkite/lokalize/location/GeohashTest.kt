@@ -77,6 +77,7 @@ class GeohashTest {
     fun hardcodedGeohashCompare() {
         check(-19.226, -63.523, "6sdfd")
         check(48.669, -4.329, "gbsuv")
+        check(41.74854535, 4.99999987, "sp7t9b0fukyj")
     }
 
     @Test
