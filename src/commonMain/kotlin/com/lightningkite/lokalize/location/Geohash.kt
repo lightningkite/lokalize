@@ -4,6 +4,7 @@ import com.lightningkite.kommon.bytes.bitHigh
 import com.lightningkite.kommon.bytes.bitHighOff
 import com.lightningkite.kommon.bytes.bitHighOn
 import com.lightningkite.kommon.bytes.bitHighSet
+import kotlin.math.*
 
 
 inline class Geohash(val bits: Long) : Comparable<Geohash> {
@@ -191,9 +192,20 @@ inline class Geohash(val bits: Long) : Comparable<Geohash> {
     fun lower(bitsResolution: Int): Long {
         return bits and (0x1L.shl(64 - bitsResolution * 2).minus(1).inv())
     }
+
     fun upper(bitsResolution: Int): Long {
         return bits or (0x1L.shl(64 - bitsResolution * 2).minus(1))
     }
+
     fun range(bitsResolution: Int) = lower(bitsResolution)..upper(bitsResolution)
+
+    infix fun distanceToKm(other: Geohash): Double {
+        val latDistance = (other.latitude - this.latitude) * (PI / 180)
+        val lonDistance = (other.longitude - this.longitude) * (PI / 180)
+        val a = sin(latDistance / 2) * sin(latDistance / 2) + (cos(this.latitude * (PI / 180)) * cos(other.latitude * (PI / 180))
+                * sin(lonDistance / 2) * sin(lonDistance / 2))
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        return World.radius * c
+    }
 }
 
