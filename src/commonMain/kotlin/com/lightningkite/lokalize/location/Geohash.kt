@@ -12,6 +12,54 @@ inline class Geohash(val bits: Long) : Comparable<Geohash> {
         return bits.compareTo(other.bits)
     }
 
+    constructor(latitude: Double, longitude: Double):this(Unit.run{
+        var bits = 0L
+
+        var lower = -90.0
+        var upper = 90.0
+        for (latBit in 0..31) {
+            val middle = (upper + lower) / 2
+            if (latitude >= middle) {
+                bits = bits.bitHighOn(latBit * 2 + 1)
+                lower = middle
+            } else {
+                bits = bits.bitHighOff(latBit * 2 + 1)
+                upper = middle
+            }
+        }
+
+        lower = -180.0
+        upper = 180.0
+        for (lonBit in 0..31) {
+            val middle = (upper + lower) / 2
+            if (longitude >= middle) {
+                bits = bits.bitHighOn(lonBit * 2)
+                lower = middle
+            } else {
+                bits = bits.bitHighOff(lonBit * 2)
+                upper = middle
+            }
+        }
+
+        bits
+    })
+
+    constructor(string: String):this(Unit.run{
+        var bits = 0L
+        var position = 59
+        var stringIndex = 0
+        for (c in string) {
+            bits = bits or fromChar(c).toLong().shl(position)
+            position -= 5
+            stringIndex++
+            if (position < 0) break
+        }
+        if (stringIndex < string.length) {
+            bits = bits or fromChar(string[stringIndex]).toLong().shr(1)
+        }
+        bits
+    })
+
     companion object {
         val chars = charArrayOf(
                 '0', '1', '2', '3', '4', '5', '6', '7',
@@ -29,53 +77,11 @@ inline class Geohash(val bits: Long) : Comparable<Geohash> {
             else return char - 'p' + 21
         }
 
-        fun fromLatLng(latitude: Double, longitude: Double): Geohash {
-            var bits = 0L
+        @Deprecated("You can call the constructor directly", ReplaceWith("Geohash(latitude, longitude)"))
+        fun fromLatLng(latitude: Double, longitude: Double): Geohash = Geohash(latitude, longitude)
 
-            var lower = -90.0
-            var upper = 90.0
-            for (latBit in 0..31) {
-                val middle = (upper + lower) / 2
-                if (latitude >= middle) {
-                    bits = bits.bitHighOn(latBit * 2 + 1)
-                    lower = middle
-                } else {
-                    bits = bits.bitHighOff(latBit * 2 + 1)
-                    upper = middle
-                }
-            }
-
-            lower = -180.0
-            upper = 180.0
-            for (lonBit in 0..31) {
-                val middle = (upper + lower) / 2
-                if (longitude >= middle) {
-                    bits = bits.bitHighOn(lonBit * 2)
-                    lower = middle
-                } else {
-                    bits = bits.bitHighOff(lonBit * 2)
-                    upper = middle
-                }
-            }
-
-            return Geohash(bits)
-        }
-
-        fun fromString(string: String): Geohash {
-            var bits = 0L
-            var position = 59
-            var stringIndex = 0
-            for (c in string) {
-                bits = bits or fromChar(c).toLong().shl(position)
-                position -= 5
-                stringIndex++
-                if (position < 0) break
-            }
-            if (stringIndex < string.length) {
-                bits = bits or fromChar(string[stringIndex]).toLong().shr(1)
-            }
-            return Geohash(bits)
-        }
+        @Deprecated("You can call the constructor directly", ReplaceWith("Geohash(latitude, longitude)"))
+        fun fromString(string: String): Geohash = Geohash(string)
 
         fun fromLatLongBits(latitude: Int, longitude: Int): Geohash {
             var bits = 0L
