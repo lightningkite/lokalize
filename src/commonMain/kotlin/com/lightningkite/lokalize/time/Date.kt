@@ -1,5 +1,7 @@
 package com.lightningkite.lokalize.time
 
+import com.lightningkite.lokalize.Locale
+
 inline class Date(val daysSinceEpoch: Int) : Comparable<Date> {
 
     constructor(
@@ -90,4 +92,6 @@ inline class Date(val daysSinceEpoch: Int) : Comparable<Date> {
     fun iso8601(): String = "${year.sinceAD.toString().padStart(4, '0')}-${month.ordinal.plus(1).toString().padStart(2, '0')}-${dayOfMonth.toString().padStart(2, '0')}"
 
     operator fun minus(other: Date) = Duration((daysSinceEpoch - other.daysSinceEpoch).times(TimeConstants.MS_PER_DAY))
+
+    override fun toString(): String = Locale.default.renderDate(this)
 }

@@ -1,6 +1,7 @@
 package com.lightningkite.lokalize.time
 
 import com.lightningkite.lokalize.DefaultLocale
+import com.lightningkite.lokalize.Locale
 
 data class DateTime(val date: Date, val time: Time) : Comparable<DateTime> {
 
@@ -24,4 +25,5 @@ data class DateTime(val date: Date, val time: Time) : Comparable<DateTime> {
     fun iso8601(offset: Duration = Duration(DefaultLocale.getTimeOffsetMilliseconds())):String = date.iso8601() + "T" + time.iso8601() + "+" + offset.hours.toString().padStart(2, '0') + ":" + offset.minutes.toString().padStart(2, '0')
 
     operator fun minus(other: DateTime) = (date - other.date) + (time - other.time)
+    override fun toString(): String = Locale.default.renderDateTime(this)
 }

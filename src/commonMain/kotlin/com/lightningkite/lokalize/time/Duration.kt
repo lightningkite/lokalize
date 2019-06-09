@@ -1,5 +1,7 @@
 package com.lightningkite.lokalize.time
 
+import kotlin.math.abs
+
 inline class Duration(val milliseconds: Long) : Comparable<Duration> {
 
     override fun compareTo(other: Duration): Int = milliseconds.compareTo(other.milliseconds)
@@ -29,11 +31,15 @@ inline class Duration(val milliseconds: Long) : Comparable<Duration> {
     val minutes: Long get() = milliseconds / TimeConstants.MS_PER_MINUTE
     val hours: Long get() = milliseconds / TimeConstants.MS_PER_HOUR
     val days: Long get() = milliseconds / TimeConstants.MS_PER_DAY
+    val weeks: Long get() = milliseconds / TimeConstants.MS_PER_WEEK
+    val years: Long get() = milliseconds / TimeConstants.MS_PER_YEAR
 
     val secondsDouble: Double get() = milliseconds.toDouble() / TimeConstants.MS_PER_SECOND
     val minutesDouble: Double get() = milliseconds.toDouble() / TimeConstants.MS_PER_MINUTE
     val hoursDouble: Double get() = milliseconds.toDouble() / TimeConstants.MS_PER_HOUR
     val daysDouble: Double get() = milliseconds.toDouble() / TimeConstants.MS_PER_DAY
+    val weeksDouble: Double get() = milliseconds.toDouble() / TimeConstants.MS_PER_WEEK
+    val yearsDouble: Double get() = milliseconds.toDouble() / TimeConstants.MS_PER_YEAR
 
     operator fun plus(other: ShortDuration) = Duration(milliseconds + other.milliseconds)
     operator fun minus(other: ShortDuration) = Duration(milliseconds - other.milliseconds)
@@ -47,4 +53,14 @@ inline class Duration(val milliseconds: Long) : Comparable<Duration> {
     operator fun div(scale: Double) = Duration((milliseconds / scale).toLong())
 
     fun toShortDuration(): ShortDuration = ShortDuration.milliseconds(milliseconds)
+
+    fun bySignificantUnit(): Pair<TimeUnit, Double> {
+        val absolute = abs(milliseconds)
+        for(unit in TimeUnit.values().reversed()) {
+            if(absolute > unit.milliseconds){
+                return unit to (milliseconds.toDouble() / unit.milliseconds)
+            }
+        }
+        return TimeUnit.Milliseconds to milliseconds.toDouble()
+    }
 }

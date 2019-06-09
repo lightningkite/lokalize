@@ -1,5 +1,7 @@
 package com.lightningkite.lokalize.time
 
+import com.lightningkite.lokalize.Locale
+
 
 inline class Time(val millisecondsSinceMidnight: Int) : Comparable<Time> {
 
@@ -47,4 +49,6 @@ inline class Time(val millisecondsSinceMidnight: Int) : Comparable<Time> {
     operator fun minus(other: Time) = Duration((millisecondsSinceMidnight - other.millisecondsSinceMidnight).toLong())
 
     fun iso8601(): String = "${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}"
+
+    override fun toString(): String = Locale.default.renderTime(this)
 }

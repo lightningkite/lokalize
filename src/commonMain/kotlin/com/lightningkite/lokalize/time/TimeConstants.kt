@@ -8,6 +8,8 @@ object TimeConstants {
     const val MS_PER_MINUTE: Long = 60L * MS_PER_SECOND
     const val MS_PER_HOUR: Long = 60L * MS_PER_MINUTE
     const val MS_PER_DAY: Long = 24L * MS_PER_HOUR
+    const val MS_PER_WEEK: Long = 7L * MS_PER_DAY
+    const val MS_PER_YEAR: Long = 365L * MS_PER_DAY + (MS_PER_DAY * 4)
 
     const val NS_PER_MILLISECOND: Long = 1_000_000L
     const val NS_PER_SECOND: Long = MS_PER_SECOND * NS_PER_MILLISECOND

@@ -1,6 +1,7 @@
 package com.lightningkite.lokalize.time
 
 import com.lightningkite.lokalize.DefaultLocale
+import com.lightningkite.lokalize.Locale
 
 
 inline class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp> {
@@ -44,5 +45,7 @@ inline class TimeStamp(val millisecondsSinceEpoch: Long) : Comparable<TimeStamp>
                     time.millisecondsSinceMidnight +
                     offset.milliseconds
     )
+
+    override fun toString(): String = Locale.default.renderTimeStamp(this)
 
 }
