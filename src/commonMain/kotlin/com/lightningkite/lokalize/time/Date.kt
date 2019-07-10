@@ -89,6 +89,8 @@ inline class Date(val daysSinceEpoch: Int) : Comparable<Date> {
 
     val year: Year get() = yearAndDayInYear.year
 
+    fun toYear(year: Year) = Date(year, month, dayOfMonth)
+
     fun iso8601(): String = "${year.sinceAD.toString().padStart(4, '0')}-${month.ordinal.plus(1).toString().padStart(2, '0')}-${dayOfMonth.toString().padStart(2, '0')}"
 
     operator fun minus(other: Date) = Duration((daysSinceEpoch - other.daysSinceEpoch).times(TimeConstants.MS_PER_DAY))

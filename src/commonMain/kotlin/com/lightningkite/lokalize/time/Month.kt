@@ -35,4 +35,6 @@ enum class Month(val days: Int, val daysLeap: Int = days) {
 
     val startDayInLeapYear: Int get() = monthStartInLeapYear[this.ordinal]
     val startDayInNormalYear: Int get() = monthStartInNormalYear[this.ordinal]
+
+    fun days(year: Year) = if (year.isLeap) daysLeap else days
 }

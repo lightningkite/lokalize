@@ -44,6 +44,18 @@ inline class Time(val millisecondsSinceMidnight: Int) : Comparable<Time> {
     val milliseconds: Int
         get() = millisecondsSinceMidnight % TimeConstants.MS_PER_SECOND_INT
 
+    fun copy(
+            hours: Int = this.hours,
+            minutes: Int = this.minutes,
+            seconds: Int = this.seconds,
+            milliseconds: Int = this.milliseconds
+    ) = Time(
+            hours = hours,
+            minutes = minutes,
+            seconds = seconds,
+            milliseconds = milliseconds
+    )
+
     operator fun plus(amount: Duration) = Time(millisecondsSinceMidnight + amount.milliseconds.toInt())
     operator fun minus(amount: Duration) = Time(millisecondsSinceMidnight - amount.milliseconds.toInt())
     operator fun minus(other: Time) = Duration((millisecondsSinceMidnight - other.millisecondsSinceMidnight).toLong())
