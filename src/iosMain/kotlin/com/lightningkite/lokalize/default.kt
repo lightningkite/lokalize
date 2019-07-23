@@ -1,9 +1,6 @@
 package com.lightningkite.lokalize
 
-import com.lightningkite.lokalize.time.Date
-import com.lightningkite.lokalize.time.DateTime
-import com.lightningkite.lokalize.time.Time
-import com.lightningkite.lokalize.time.TimeStamp
+import com.lightningkite.lokalize.time.*
 import platform.Foundation.*
 import platform.QuartzCore.CACurrentMediaTime
 import platform.posix.gettimeofday
@@ -30,37 +27,37 @@ actual val DefaultLocale = object : Locale {
 
     override fun renderDate(date: Date): String {
         val dateFormatter = NSDateFormatter()
-        dateFormatter.setDateStyle(NSDateFormatterMediumStyle)
+        dateFormatter.setDateStyle(NSDateFormatterShortStyle)
         dateFormatter.setTimeStyle(NSDateFormatterNoStyle)
         return NSDate.dateWithTimeIntervalSince1970(
-                secs = TimeStamp(date = date, time = Time(0)).millisecondsSinceEpoch.times(1000.0)
+                secs = TimeStamp(date = date, time = Time(0)).millisecondsSinceEpoch.div(1000.0)
         ).let{ dateFormatter.stringFromDate(it) }
     }
 
     override fun renderTime(time: Time): String {
         val dateFormatter = NSDateFormatter()
         dateFormatter.setDateStyle(NSDateFormatterNoStyle)
-        dateFormatter.setTimeStyle(NSDateFormatterMediumStyle)
+        dateFormatter.setTimeStyle(NSDateFormatterShortStyle)
         return NSDate.dateWithTimeIntervalSince1970(
-                secs = time.millisecondsSinceMidnight.times(1000.0)
+                secs = TimeStamp(date = TimeStamp.now().date(), time = time).millisecondsSinceEpoch.div(1000.0)
         ).let{ dateFormatter.stringFromDate(it) }
     }
 
     override fun renderDateTime(dateTime: DateTime): String {
         val dateFormatter = NSDateFormatter()
-        dateFormatter.setDateStyle(NSDateFormatterMediumStyle)
-        dateFormatter.setTimeStyle(NSDateFormatterMediumStyle)
+        dateFormatter.setDateStyle(NSDateFormatterShortStyle)
+        dateFormatter.setTimeStyle(NSDateFormatterShortStyle)
         return NSDate.dateWithTimeIntervalSince1970(
-                secs = dateTime.toTimeStamp().millisecondsSinceEpoch.times(1000.0)
+                secs = dateTime.toTimeStamp().millisecondsSinceEpoch.div(1000.0)
         ).let{ dateFormatter.stringFromDate(it) }
     }
 
     override fun renderTimeStamp(timeStamp: TimeStamp): String {
         val dateFormatter = NSDateFormatter()
-        dateFormatter.setDateStyle(NSDateFormatterMediumStyle)
-        dateFormatter.setTimeStyle(NSDateFormatterMediumStyle)
+        dateFormatter.setDateStyle(NSDateFormatterShortStyle)
+        dateFormatter.setTimeStyle(NSDateFormatterShortStyle)
         return NSDate.dateWithTimeIntervalSince1970(
-                secs = timeStamp.millisecondsSinceEpoch.times(1000.0)
+                secs = timeStamp.millisecondsSinceEpoch.div(1000.0)
         ).let{ dateFormatter.stringFromDate(it) }
     }
 }
